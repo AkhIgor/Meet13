@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MyRetrofit {
 
-    private static final String BASIC_URL = "https://api.darksky.net/forecast/7713d0cdefa96f6134c75945467058b5/";
+    private static final String BASIC_URL = "https://api.darksky.net/forecast/29a6a03705b72421235f761dbba0fbdf/";
 
     public WebService getRetrofit() {
         Retrofit retrofit = new Retrofit.Builder()

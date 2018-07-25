@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -29,8 +31,8 @@ public class myService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         MyRetrofit myRetrofit = new MyRetrofit();
-        MyDataBase myDataBase = MyDataBase.getInstance(getBaseContext());
-        WeatherDao weatherDao = myDataBase.weatherDao();
+        final MyDataBase myDataBase = MyDataBase.getInstance(getBaseContext());
+        final WeatherDao weatherDao = myDataBase.weatherDao();
 
         try {
             List<Double> coordinates;
@@ -40,25 +42,33 @@ public class myService extends IntentService {
                 changed = intent.getBooleanExtra(SettingsActivity.CHANGED, false);
 
             coordinates = changed ? getNewCoordinates() : getPreviousCoordinates();
+            myRetrofit.getRetrofit()
+                    .getWeekForecast(coordinates.get(0), coordinates.get(1)).enqueue(new Callback<Weather>() {
+                @Override
+                public void onResponse(Call<Weather> call, Response<Weather> response) {
+                    Weather weather = response.body();
+                    List<HourlyForecast> forecasts = response.body().getHourly().getForecast().subList(0, 25);
+                    response.body().getHourly().setForecast(forecasts);
+                    Intent broadcast = new Intent(MainActivity.BROADCAST).putExtra(MainActivity.WEATHER, weather);
+                    sendBroadcast(broadcast);
+                    Log.d("TAG", "broadcast was sent");
 
-            Response<Weather> results = myRetrofit.getRetrofit()
-                    .getWeekForecast(coordinates.get(0), coordinates.get(1))
-                    .execute();
+                    myDataBase.clearAllTables();
+                    weatherDao.addDailyForecast(weather.getDaily().getForecast());
+                    weatherDao.addHourlyForecast(weather.getHourly().getForecast());
+                    weatherDao.addForecast(weather);
+                }
 
-            Weather weather = results.body();
+                @Override
+                public void onFailure(Call<Weather> call, Throwable t) {
 
-                assert weather != null;
-                List<HourlyForecast> forecasts = weather.getHourly().getForecast().subList(0, 24);
-                weather.getHourly().setForecast(forecasts);
+                }
+            });
 
-            Intent broadcast = new Intent(MainActivity.BROADCAST).putExtra(MainActivity.WEATHER, weather);
-            sendBroadcast(broadcast);
-            Log.d("TAG", "broadcast was sent");
+//
 
-            myDataBase.clearAllTables();
-            weatherDao.addDailyForecast(weather.getDaily().getForecast());
-            weatherDao.addHourlyForecast(weather.getHourly().getForecast());
-            weatherDao.addForecast(weather);
+// assert weather != null;
+
         } catch (IOException e) {
             e.printStackTrace();
         }
