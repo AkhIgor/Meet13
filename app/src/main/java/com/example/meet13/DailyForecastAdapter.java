@@ -14,28 +14,27 @@ import java.util.List;
  * Created by Игорь on 15.07.2018.
  */
 
-public class DailyForecastAdapter extends RecyclerView.Adapter<DailyForecastAdapter.DailyViewHolder> {
+public class DailyForecastAdapter extends RecyclerView.Adapter<DailyForecastAdapter.ViewHolder> {
 
-    private List<DailyForecast> dailyForecast;
-    private List<HourlyForecast> hourlyForecast;
+    private List<DailyForecast> Forecast;
     private MyCallBack myCalBack;
     private Context Context;
 
     public DailyForecastAdapter(List<DailyForecast> forecast, Context context, MyCallBack myCalBack) {
-        this.dailyForecast = forecast;
+        this.Forecast = forecast;
         this.Context = context;
         this.myCalBack = myCalBack;
     }
 
     @Override
-    public DailyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(Context).inflate(R.layout.daily_list_item, parent);
-        return new DailyViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(DailyViewHolder holder, int position) {
-        final DailyForecast forecast = dailyForecast.get(position);
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        final DailyForecast forecast = Forecast.get(position);
 
         holder.Icon.setImageResource(Formats.setImage(forecast.getIcon()));
         holder.DayTemp.setText(Formats.tempFormat(forecast.getTemperatureHigh()));
@@ -52,21 +51,16 @@ public class DailyForecastAdapter extends RecyclerView.Adapter<DailyForecastAdap
     }
 
     public void addDailyData(List<DailyForecast> data){
-        dailyForecast.clear();
-        dailyForecast.addAll(data);
-    }
-
-    public void addHourlyData(List<HourlyForecast> data){
-        hourlyForecast.clear();
-        hourlyForecast.addAll(data);
+        Forecast.clear();
+        Forecast.addAll(data);
     }
 
     @Override
     public int getItemCount() {
-        return dailyForecast.size();
+        return Forecast.size();
     }
 
-    public class DailyViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView Icon;
         private TextView DayTemp;
@@ -74,7 +68,7 @@ public class DailyForecastAdapter extends RecyclerView.Adapter<DailyForecastAdap
         private TextView Date;
         private TextView Description;
 
-        public DailyViewHolder(View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
 
             Icon = (ImageView) itemView.findViewById(R.id.imageDaily);
@@ -87,20 +81,5 @@ public class DailyForecastAdapter extends RecyclerView.Adapter<DailyForecastAdap
 
     public interface MyCallBack {
         void onItemClick(DailyForecast dailyForecast);
-    }
-
-    public class HourlyViewHolder extends RecyclerView.ViewHolder {
-
-        TextView HourText;
-        TextView Temp;
-        ImageView Icon;
-
-        public HourlyViewHolder(View itemView) {
-            super(itemView);
-
-            HourText = (TextView) itemView.findViewById(R.id.hourText);
-            Temp = (TextView) itemView.findViewById(R.id.Temper);
-            Icon = (ImageView) itemView.findViewById(R.id.iconHourly);
-        }
     }
 }

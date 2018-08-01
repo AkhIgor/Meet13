@@ -52,9 +52,6 @@ public class MainActivity extends AppCompatActivity implements MainManager.View,
 
     private Presenter presenter;
 
-//    DailyForecastAdapter.DataListSetter dailyDataListSetter;
-//    HourlyForecastAdapter.DataListSetter hourlyDataListSetter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -195,24 +192,6 @@ public class MainActivity extends AppCompatActivity implements MainManager.View,
         }
     }
 
-//    interface ListSetter {
-//        void dailyListSet(DailyForecastAdapter.DataListSetter list);
-//        void hourlyListSet(HourlyForecastAdapter.DataListSetter list);
-//    }
-//
-//    class DailyHourlySetter implements ListSetter {
-//
-//        @Override
-//        public void dailyListSet(DailyForecastAdapter.DataListSetter list) {
-//            dailyDataListSetter = list;
-//        }
-//
-//        @Override
-//        public void hourlyListSet(HourlyForecastAdapter.DataListSetter list) {
-//            hourlyDataListSetter = list;
-//        }
-//    }
-
     class myReceiver extends BroadcastReceiver {
 
         private Weather weather;
@@ -227,14 +206,13 @@ public class MainActivity extends AppCompatActivity implements MainManager.View,
             Description.setText(weather.getDaily().getSummary());
 
             dailyForecast = weather.getDaily().getData();
-//            dailyDataListSetter.setDataList(dailyForecast);
             dailyForecastAdapter.addDailyData(dailyForecast);
+
             dailyForecastAdapter.notifyDataSetChanged();
 
             hourlyForecast = weather.getHourly().getData();
-//            hourlyDataListSetter.setDataList(hourlyForecast);
-
             hourlyForecastAdapter.addHourlyData(hourlyForecast);
+
             hourlyForecastAdapter.notifyDataSetChanged();
 
             Log.d("TAG", "MyReceiver was stopped");

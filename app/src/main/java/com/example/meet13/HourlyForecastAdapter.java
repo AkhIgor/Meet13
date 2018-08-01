@@ -18,14 +18,10 @@ public class HourlyForecastAdapter extends RecyclerView.Adapter<HourlyForecastAd
 
     private List<HourlyForecast> Forecast;
     private Context Context;
-//    private MainActivity.DailyHourlySetter hourlySetter;
 
     public HourlyForecastAdapter(List<HourlyForecast> forecast, Context context) {
         this.Forecast = forecast;
         this.Context = context;
-
-//        this.hourlySetter = hourlySetter;
-//        this.hourlySetter.hourlyListSet(new DataListSetter());
     }
 
     @Override
