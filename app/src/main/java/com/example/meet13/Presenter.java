@@ -1,7 +1,6 @@
 package com.example.meet13;
 
 import android.net.ConnectivityManager;
-import android.net.Network;
 import android.net.NetworkInfo;
 
 import java.util.List;
@@ -44,7 +43,7 @@ public class Presenter implements MainManager.Presenter {
         View.hideProgressBar();
 
         Weather weather = Model.getWeather();
-        List<DailyForecast> forecasts = weather.getDaily().getForecast();
+        List<DailyForecast> forecasts = weather.getDaily().getData();
         View.hideProgressBar();
 
         if(forecasts != null)

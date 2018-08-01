@@ -14,31 +14,32 @@ import java.util.List;
  * Created by Игорь on 15.07.2018.
  */
 
-public class DailyForecastAdapter extends RecyclerView.Adapter<DailyForecastAdapter.ViewHolder> {
+public class DailyForecastAdapter extends RecyclerView.Adapter<DailyForecastAdapter.DailyViewHolder> {
 
-    private List<DailyForecast> Forecast;
+    private List<DailyForecast> dailyForecast;
+    private List<HourlyForecast> hourlyForecast;
     private MyCallBack myCalBack;
     private Context Context;
 
     public DailyForecastAdapter(List<DailyForecast> forecast, Context context, MyCallBack myCalBack) {
-        this.Forecast = forecast;
+        this.dailyForecast = forecast;
         this.Context = context;
         this.myCalBack = myCalBack;
     }
 
     @Override
-    public DailyForecastAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.daily_list_item, parent);
-        return new ViewHolder(view);
+    public DailyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(Context).inflate(R.layout.daily_list_item, parent);
+        return new DailyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(DailyForecastAdapter.ViewHolder holder, int position) {
-        final DailyForecast forecast = Forecast.get(position);
+    public void onBindViewHolder(DailyViewHolder holder, int position) {
+        final DailyForecast forecast = dailyForecast.get(position);
 
         holder.Icon.setImageResource(Formats.setImage(forecast.getIcon()));
-        holder.DayTemp.setText(Formats.tempFormat(forecast.getDayTemperature()));
-        holder.NigthTemp.setText(Formats.tempFormat(forecast.getNigthTemperature()));
+        holder.DayTemp.setText(Formats.tempFormat(forecast.getTemperatureHigh()));
+        holder.NightTemp.setText(Formats.tempFormat(forecast.getTemperatureLow()));
         holder.Date.setText(Formats.dateFormat(forecast.getTime()));
         holder.Description.setText(forecast.getSummary());
 
@@ -50,31 +51,56 @@ public class DailyForecastAdapter extends RecyclerView.Adapter<DailyForecastAdap
         });
     }
 
-    @Override
-    public int getItemCount() {
-        return Forecast.size();
+    public void addDailyData(List<DailyForecast> data){
+        dailyForecast.clear();
+        dailyForecast.addAll(data);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public void addHourlyData(List<HourlyForecast> data){
+        hourlyForecast.clear();
+        hourlyForecast.addAll(data);
+    }
+
+    @Override
+    public int getItemCount() {
+        return dailyForecast.size();
+    }
+
+    public class DailyViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView Icon;
         private TextView DayTemp;
-        private TextView NigthTemp;
+        private TextView NightTemp;
         private TextView Date;
         private TextView Description;
 
-        public ViewHolder(View itemView) {
+        public DailyViewHolder(View itemView) {
             super(itemView);
 
-            Icon = (ImageView) itemView.findViewById(R.id.icon);
-            DayTemp = (TextView) itemView.findViewById(R.id.temp);
-            NigthTemp = (TextView) itemView.findViewById(R.id.nigthTemp);
+            Icon = (ImageView) itemView.findViewById(R.id.imageDaily);
+            DayTemp = (TextView) itemView.findViewById(R.id.dayTemp);
+            NightTemp = (TextView) itemView.findViewById(R.id.nightTemp);
             Date = (TextView) itemView.findViewById(R.id.date);
-            Description = (TextView) itemView.findViewById(R.id.description);
+            Description = (TextView) itemView.findViewById(R.id.descriptionDaily);
         }
     }
 
     public interface MyCallBack {
         void onItemClick(DailyForecast dailyForecast);
+    }
+
+    public class HourlyViewHolder extends RecyclerView.ViewHolder {
+
+        TextView HourText;
+        TextView Temp;
+        ImageView Icon;
+
+        public HourlyViewHolder(View itemView) {
+            super(itemView);
+
+            HourText = (TextView) itemView.findViewById(R.id.hourText);
+            Temp = (TextView) itemView.findViewById(R.id.Temper);
+            Icon = (ImageView) itemView.findViewById(R.id.iconHourly);
+        }
     }
 }

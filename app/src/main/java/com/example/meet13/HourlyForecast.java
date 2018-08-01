@@ -5,8 +5,6 @@ import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.concurrent.TimeUnit;
-
 /**
  * Created by Игорь on 15.07.2018.
  */
@@ -15,59 +13,59 @@ import java.util.concurrent.TimeUnit;
 class HourlyForecast implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
-    private long ID;
-    private long Time;
-    private String Icon;
-    private double Temperature;
+    private long id;
+    private long time;
+    private String icon;
+    private double temperature;
 
     public HourlyForecast() {
     }
 
-    public long getID() {
-        return ID;
+    public long getId() {
+        return id;
     }
 
-    public void setID(long id) {
-        this.ID = id;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public long getTime() {
-        return Time;
+        return time;
     }
 
     public void setTime(long time) {
-        this.Time = time;
+        this.time = time;
     }
 
     public String getIcon() {
-        return Icon;
+        return icon;
     }
 
     public void setIcon(String icon) {
-        this.Icon = icon;
+        this.icon = icon;
     }
 
     public double getTemperature() {
-        return Temperature;
+        return temperature;
     }
 
     public void setTemperature(double temperature) {
-        this.Temperature = temperature;
+        this.temperature = temperature;
     }
 
     protected HourlyForecast(Parcel in) {
-        ID = in.readLong();
-        Time = in.readLong();
-        Icon = in.readString();
-        Temperature = in.readDouble();
+        id = in.readLong();
+        time = in.readLong();
+        icon = in.readString();
+        temperature = in.readDouble();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(ID);
-        dest.writeLong(Time);
-        dest.writeString(Icon);
-        dest.writeDouble(Temperature);
+        dest.writeLong(id);
+        dest.writeLong(time);
+        dest.writeString(icon);
+        dest.writeDouble(temperature);
     }
 
     @Override

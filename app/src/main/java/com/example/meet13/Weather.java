@@ -14,31 +14,31 @@ import android.os.Parcelable;
 class Weather implements Parcelable{
 
     @PrimaryKey(autoGenerate = true)
-    private long ID;
-    private double Latitude;
-    private double Longitude;
-    private String Timezone;
+    private long id;
+    private double latitude;
+    private double longitude;
+    private String timezone;
     @Embedded
-    private Daily Daily;
+    private Daily daily;
     @Embedded
-    private Hourly Hourly;
+    private Hourly hourly;
 
     public Weather() {
     }
 
     public Weather(long id, double latitude, double longitude, String timezone) {
-        this.ID = id;
-        this.Latitude = latitude;
-        this.Longitude = longitude;
-        this.Timezone = timezone;
+        this.id = id;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.timezone = timezone;
     }
 
     protected Weather(Parcel in) {
-        Latitude = in.readDouble();
-        Longitude = in.readDouble();
-        Timezone = in.readString();
-        Daily = in.readParcelable(Daily.class.getClassLoader());
-        Hourly = in.readParcelable(Hourly.class.getClassLoader());
+        latitude = in.readDouble();
+        longitude = in.readDouble();
+        timezone = in.readString();
+        daily = in.readParcelable(Daily.class.getClassLoader());
+        hourly = in.readParcelable(Hourly.class.getClassLoader());
     }
 
     public static final Creator<Weather> CREATOR = new Creator<Weather>() {
@@ -60,58 +60,59 @@ class Weather implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeDouble(Latitude);
-        dest.writeDouble(Longitude);
-        dest.writeString(Timezone);
-        dest.writeParcelable(Daily, flags);
-        dest.writeParcelable(Hourly, flags);
+        dest.writeDouble(latitude);
+        dest.writeDouble(longitude);
+        dest.writeString(timezone);
+        dest.writeParcelable(daily, flags);
+        dest.writeParcelable(hourly, flags);
     }
 
-    public long getID() {
-        return ID;
+
+    public long getId() {
+        return id;
     }
 
-    public void setID(long ID) {
-        this.ID = ID;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public double getLatitude() {
-        return Latitude;
+        return latitude;
     }
 
     public void setLatitude(double latitude) {
-        this.Latitude = latitude;
+        this.latitude = latitude;
     }
 
     public double getLongitude() {
-        return Longitude;
+        return longitude;
     }
 
     public void setLongitude(double longitude) {
-        this.Longitude = longitude;
+        this.longitude = longitude;
     }
 
     public String getTimezone() {
-        return Timezone;
+        return timezone;
     }
 
     public void setTimezone(String timezone) {
-        this.Timezone = timezone;
+        this.timezone = timezone;
     }
 
     public Daily getDaily() {
-        return Daily;
+        return daily;
     }
 
     public void setDaily(Daily daily) {
-        this.Daily = daily;
+        this.daily = daily;
     }
 
     public Hourly getHourly() {
-        return Hourly;
+        return hourly;
     }
 
     public void setHourly(Hourly hourly) {
-        this.Hourly = hourly;
+        this.hourly = hourly;
     }
 }

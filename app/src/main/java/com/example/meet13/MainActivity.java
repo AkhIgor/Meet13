@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity implements MainManager.View,
     private TextView CityName;
     private TextView Description;
 
-    private RecyclerView.Adapter dailyForecastAdapter;
-    private RecyclerView.Adapter hourlyForecastAdapter;
+    private DailyForecastAdapter dailyForecastAdapter;
+    private HourlyForecastAdapter hourlyForecastAdapter;
 
     private SwipeRefreshLayout SwipeRefreshLayout;
 
@@ -51,6 +51,9 @@ public class MainActivity extends AppCompatActivity implements MainManager.View,
     private RecyclerView dailyView;
 
     private Presenter presenter;
+
+//    DailyForecastAdapter.DataListSetter dailyDataListSetter;
+//    HourlyForecastAdapter.DataListSetter hourlyDataListSetter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,12 +68,15 @@ public class MainActivity extends AppCompatActivity implements MainManager.View,
         dailyView = (RecyclerView) findViewById(R.id.weatherPerDay);
         hourlyView = (RecyclerView) findViewById(R.id.weatherPerHour);
 
+//        dailyView.setLayoutManager(new LinearLayoutManager(this));
+//        hourlyView.setLayoutManager(new LinearLayoutManager(this));
 
         dailyView.setHasFixedSize(true);
         hourlyView.setHasFixedSize(true);
 
         dailyForecast = new ArrayList<DailyForecast>();
         hourlyForecast = new ArrayList<HourlyForecast>();
+
         dailyForecastAdapter = new DailyForecastAdapter(dailyForecast, this, this);
         hourlyForecastAdapter = new HourlyForecastAdapter(hourlyForecast, this);
 
@@ -118,8 +124,8 @@ public class MainActivity extends AppCompatActivity implements MainManager.View,
         CityName.setText(weather.getTimezone());
         Description.setText(weather.getDaily().getSummary());
 
-        dailyForecast = weather.getDaily().getForecast();
-        hourlyForecast = weather.getHourly().getForecast();
+        dailyForecast = weather.getDaily().getData();
+        hourlyForecast = weather.getHourly().getData();
 
         dailyForecastAdapter.notifyDataSetChanged();
         hourlyForecastAdapter.notifyDataSetChanged();
@@ -137,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements MainManager.View,
         if(SwipeRefreshLayout.isRefreshing())
             return;
         progressBar.setVisibility(View.GONE);
+        SwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -188,6 +195,24 @@ public class MainActivity extends AppCompatActivity implements MainManager.View,
         }
     }
 
+//    interface ListSetter {
+//        void dailyListSet(DailyForecastAdapter.DataListSetter list);
+//        void hourlyListSet(HourlyForecastAdapter.DataListSetter list);
+//    }
+//
+//    class DailyHourlySetter implements ListSetter {
+//
+//        @Override
+//        public void dailyListSet(DailyForecastAdapter.DataListSetter list) {
+//            dailyDataListSetter = list;
+//        }
+//
+//        @Override
+//        public void hourlyListSet(HourlyForecastAdapter.DataListSetter list) {
+//            hourlyDataListSetter = list;
+//        }
+//    }
+
     class myReceiver extends BroadcastReceiver {
 
         private Weather weather;
@@ -201,10 +226,15 @@ public class MainActivity extends AppCompatActivity implements MainManager.View,
             CityName.setText(weather.getTimezone());
             Description.setText(weather.getDaily().getSummary());
 
-            dailyForecast = weather.getDaily().getForecast();
+            dailyForecast = weather.getDaily().getData();
+//            dailyDataListSetter.setDataList(dailyForecast);
+            dailyForecastAdapter.addDailyData(dailyForecast);
             dailyForecastAdapter.notifyDataSetChanged();
 
-            hourlyForecast = weather.getHourly().getForecast();
+            hourlyForecast = weather.getHourly().getData();
+//            hourlyDataListSetter.setDataList(hourlyForecast);
+
+            hourlyForecastAdapter.addHourlyData(hourlyForecast);
             hourlyForecastAdapter.notifyDataSetChanged();
 
             Log.d("TAG", "MyReceiver was stopped");

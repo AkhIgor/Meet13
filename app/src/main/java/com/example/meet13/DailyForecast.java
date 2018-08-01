@@ -12,134 +12,134 @@ import android.os.Parcelable;
 class DailyForecast implements Parcelable {
     
     @PrimaryKey(autoGenerate = true)
-    private long ID;
-    private long Time;
-    private String Summary;
-    private String Icon;
-    private long SunriseTime;
-    private long SunsetTime;
-    private double DayTemperature;
-    private double NigthTemperature;
-    private double Humidity;
-    private double Pressure;
-    private double WindSpeed;
+    private long id;
+    private long time;
+    private String summary;
+    private String icon;
+    private long sunriseTime;
+    private long sunsetTime;
+    private double temperatureHigh;
+    private double temperatureLow;
+    private double humidity;
+    private double pressure;
+    private double windSpeed;
 
     public DailyForecast() {
     }
 
-    public long getID() {
-        return ID;
+    public long getId() {
+        return id;
     }
 
-    public void setID(long id) {
-        this.ID = id;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public long getTime() {
-        return Time;
+        return time;
     }
 
     public void setTime(long time) {
-        this.Time = time;
+        this.time = time;
     }
 
     public String getSummary() {
-        return Summary;
+        return summary;
     }
 
     public void setSummary(String summary) {
-        this.Summary = summary;
+        this.summary = summary;
     }
 
     public String getIcon() {
-        return Icon;
+        return icon;
     }
 
     public void setIcon(String icon) {
-        this.Icon = icon;
+        this.icon = icon;
     }
 
     public long getSunriseTime() {
-        return SunriseTime;
+        return sunriseTime;
     }
 
     public void setSunriseTime(long sunriseTime) {
-        this.SunriseTime = sunriseTime;
+        this.sunriseTime = sunriseTime;
     }
 
     public long getSunsetTime() {
-        return SunsetTime;
+        return sunsetTime;
     }
 
     public void setSunsetTime(long sunsetTime) {
-        this.SunsetTime = sunsetTime;
+        this.sunsetTime = sunsetTime;
     }
 
-    public double getDayTemperature() {
-        return DayTemperature;
+    public double getTemperatureHigh() {
+        return temperatureHigh;
     }
 
-    public void setDayTemperature(double dayTemperature) {
-        this.DayTemperature = dayTemperature;
+    public void setTemperatureHigh(double dayTemperature) {
+        this.temperatureHigh = dayTemperature;
     }
 
-    public double getNigthTemperature() {
-        return NigthTemperature;
+    public double getTemperatureLow() {
+        return temperatureLow;
     }
 
-    public void setNigthTemperature(double nigthTemperature) {
-        this.NigthTemperature = nigthTemperature;
+    public void setTemperatureLow(double nigthTemperature) {
+        this.temperatureLow = nigthTemperature;
     }
 
     public double getHumidity() {
-        return Humidity;
+        return humidity;
     }
 
     public void setHumidity(double humidity) {
-        this.Humidity = humidity;
+        this.humidity = humidity;
     }
 
     public double getPressure() {
-        return Pressure;
+        return pressure;
     }
 
     public void setPressure(double pressure) {
-        this.Pressure = pressure;
+        this.pressure = pressure;
     }
 
     public double getWindSpeed() {
-        return WindSpeed;
+        return windSpeed;
     }
 
     public void setWindSpeed(double windSpeed) {
-        this.WindSpeed = windSpeed;
+        this.windSpeed = windSpeed;
     }
     
     protected DailyForecast(Parcel in) {
-        Time = in.readLong();
-        Summary = in.readString();
-        Icon = in.readString();
-        SunriseTime = in.readLong();
-        SunsetTime = in.readLong();
-        DayTemperature = in.readDouble();
-        NigthTemperature = in.readDouble();
-        Humidity = in.readDouble();
-        Pressure = in.readDouble();
-        WindSpeed = in.readDouble();
+        time = in.readLong();
+        summary = in.readString();
+        icon = in.readString();
+        sunriseTime = in.readLong();
+        sunsetTime = in.readLong();
+        temperatureHigh = in.readDouble();
+        temperatureLow = in.readDouble();
+        humidity = in.readDouble();
+        pressure = in.readDouble();
+        windSpeed = in.readDouble();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(Time);
-        dest.writeString(Summary);
-        dest.writeString(Icon);
-        dest.writeLong(SunriseTime);
-        dest.writeLong(SunsetTime);
-        dest.writeDouble(DayTemperature);
-        dest.writeDouble(NigthTemperature);
-        dest.writeDouble(Humidity);
-        dest.writeDouble(Pressure);
-        dest.writeDouble(WindSpeed);
+        dest.writeLong(time);
+        dest.writeString(summary);
+        dest.writeString(icon);
+        dest.writeLong(sunriseTime);
+        dest.writeLong(sunsetTime);
+        dest.writeDouble(temperatureHigh);
+        dest.writeDouble(temperatureLow);
+        dest.writeDouble(humidity);
+        dest.writeDouble(pressure);
+        dest.writeDouble(windSpeed);
     }
 
     @Override

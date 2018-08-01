@@ -18,15 +18,19 @@ public class HourlyForecastAdapter extends RecyclerView.Adapter<HourlyForecastAd
 
     private List<HourlyForecast> Forecast;
     private Context Context;
+//    private MainActivity.DailyHourlySetter hourlySetter;
 
     public HourlyForecastAdapter(List<HourlyForecast> forecast, Context context) {
         this.Forecast = forecast;
         this.Context = context;
+
+//        this.hourlySetter = hourlySetter;
+//        this.hourlySetter.hourlyListSet(new DataListSetter());
     }
 
     @Override
     public HourlyForecastAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.hourly_list_item, parent, false);
+        View view = LayoutInflater.from(Context).inflate(R.layout.hourly_list_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -37,6 +41,11 @@ public class HourlyForecastAdapter extends RecyclerView.Adapter<HourlyForecastAd
         holder.HourText.setText(Formats.timeFormat(forecast.getTime()));
         holder.Temp.setText(Formats.tempFormat(forecast.getTemperature()));
         holder.Icon.setImageResource(Formats.setImage(forecast.getIcon()));
+    }
+
+    public void addHourlyData(List<HourlyForecast> data){
+        Forecast.clear();
+        Forecast.addAll(data);
     }
 
     @Override
@@ -54,8 +63,8 @@ public class HourlyForecastAdapter extends RecyclerView.Adapter<HourlyForecastAd
             super(itemView);
 
             HourText = (TextView) itemView.findViewById(R.id.hourText);
-            Temp = (TextView) itemView.findViewById(R.id.temp);
-            Icon = (ImageView) itemView.findViewById(R.id.icon);
+            Temp = (TextView) itemView.findViewById(R.id.Temper);
+            Icon = (ImageView) itemView.findViewById(R.id.iconHourly);
         }
     }
 }

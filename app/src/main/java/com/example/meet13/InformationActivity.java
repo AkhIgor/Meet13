@@ -25,7 +25,7 @@ public class InformationActivity extends AppCompatActivity {
         icon = (ImageView) findViewById(R.id.weatherIcon);
         dateText = (TextView) findViewById(R.id.dateText);
         dayTemp = (TextView) findViewById(R.id.dayTemp);
-        nigthTemp = (TextView) findViewById(R.id.nigthTemp);
+        nigthTemp = (TextView) findViewById(R.id.nightTemp);
         description = (TextView) findViewById(R.id.description);
 
         sunrise = (TextView) findViewById(R.id.sunriseText);
@@ -37,8 +37,8 @@ public class InformationActivity extends AppCompatActivity {
 
         icon.setImageResource(Formats.setImage(dailyForecast.getIcon()));
         dateText.setText(Formats.dateFormat(dailyForecast.getTime()));
-        dayTemp.setText(Formats.tempFormat(dailyForecast.getDayTemperature()));
-        nigthTemp.setText(Formats.tempFormat(dailyForecast.getNigthTemperature()));
+        dayTemp.setText(Formats.tempFormat(dailyForecast.getTemperatureHigh()));
+        nigthTemp.setText(Formats.tempFormat(dailyForecast.getTemperatureLow()));
         description.setText(dailyForecast.getSummary());
 
         sunrise.setText(Formats.timeFormat(dailyForecast.getSunriseTime()));

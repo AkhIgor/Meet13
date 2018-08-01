@@ -24,6 +24,8 @@ import retrofit2.Response;
 
 public class myService extends IntentService {
 
+    private Weather weather;
+
     public myService() {
         super("Service name");
     }
@@ -46,17 +48,22 @@ public class myService extends IntentService {
                     .getWeekForecast(coordinates.get(0), coordinates.get(1)).enqueue(new Callback<Weather>() {
                 @Override
                 public void onResponse(Call<Weather> call, Response<Weather> response) {
-                    Weather weather = response.body();
-                    List<HourlyForecast> forecasts = response.body().getHourly().getForecast().subList(0, 25);
-                    response.body().getHourly().setForecast(forecasts);
+                    weather = response.body();
+                    List<HourlyForecast> forecasts = response.body().getHourly().getData().subList(0, 25);
+                    response.body().getHourly().setData(forecasts);
                     Intent broadcast = new Intent(MainActivity.BROADCAST).putExtra(MainActivity.WEATHER, weather);
                     sendBroadcast(broadcast);
                     Log.d("TAG", "broadcast was sent");
 
-                    myDataBase.clearAllTables();
-                    weatherDao.addDailyForecast(weather.getDaily().getForecast());
-                    weatherDao.addHourlyForecast(weather.getHourly().getForecast());
-                    weatherDao.addForecast(weather);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            myDataBase.clearAllTables();
+                            weatherDao.addDailyForecast(weather.getDaily().getData());
+                            weatherDao.addHourlyForecast(weather.getHourly().getData());
+                            weatherDao.addForecast(weather);
+                        }
+                    }).start();
                 }
 
                 @Override

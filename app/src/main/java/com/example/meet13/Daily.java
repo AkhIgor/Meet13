@@ -17,61 +17,61 @@ import java.util.List;
 class Daily implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
-    private long DailyID;
+    private long dailyId;
     @ColumnInfo(name = "dailySummary")
-    private String Summary;
+    private String summary;
     @ColumnInfo(name = "dailyIcon")
-    private String Icon;
+    private String icon;
 
     @Ignore
-    private List<DailyForecast> Forecast;
+    private List<DailyForecast> data;
 
     public Daily() {
     }
 
-    public long getDailyID() {
-        return DailyID;
+    public long getDailyId() {
+        return dailyId;
     }
 
-    public void setDailyID(long id) {
-        this.DailyID = id;
+    public void setDailyId(long id) {
+        this.dailyId = id;
     }
 
     public String getSummary() {
-        return Summary;
+        return summary;
     }
 
     public void setSummary(String summary) {
-        this.Summary = summary;
+        this.summary = summary;
     }
 
     public String getIcon() {
-        return Icon;
+        return icon;
     }
 
     public void setIcon(String icon) {
-        this.Icon = icon;
+        this.icon = icon;
     }
 
-    public List<DailyForecast> getForecast() {
-        return Forecast;
+    public List<DailyForecast> getData() {
+        return data;
     }
 
-    public void setForecast(List<DailyForecast> forecast) {
-        this.Forecast = forecast;
+    public void setData(List<DailyForecast> forecast) {
+        this.data = forecast;
     }
 
     protected Daily(Parcel in) {
-        Summary = in.readString();
-        Icon = in.readString();
-        Forecast = in.createTypedArrayList(DailyForecast.CREATOR);
+        summary = in.readString();
+        icon = in.readString();
+        data = in.createTypedArrayList(DailyForecast.CREATOR);
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(Summary);
-        dest.writeString(Icon);
-        dest.writeTypedList(Forecast);
+        dest.writeString(summary);
+        dest.writeString(icon);
+        dest.writeTypedList(data);
     }
 
     @Override

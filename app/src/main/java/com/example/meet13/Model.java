@@ -50,8 +50,8 @@ public class Model implements MainManager.Model {
             List<DailyForecast> dailyData = dao.getDailyForecast(dailyTime);
             List<HourlyForecast> hourlyData = dao.getHourlyForecast(hourlyTime);
 
-            weather.getDaily().setForecast(dailyData);
-            weather.getHourly().setForecast(hourlyData);
+            weather.getDaily().setData(dailyData);
+            weather.getHourly().setData(hourlyData);
             return weather;
         }
     }
