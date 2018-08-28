@@ -41,7 +41,7 @@ public class myService extends IntentService {
             boolean changed = false;
 
             if(intent != null)
-                changed = intent.getBooleanExtra(SettingsActivity.CHANGED, false);
+                changed = intent.getBooleanExtra(SettingsActivity.IS_PREFS_CHANGED, false);
 
             coordinates = changed ? getNewCoordinates() : getPreviousCoordinates();
             myRetrofit.getRetrofit()
@@ -104,7 +104,7 @@ public class myService extends IntentService {
 
         if(addresses != null && !addresses.isEmpty()) {
             double latitude = addresses.get(0).getLatitude();
-            double longitude = addresses.get(1).getLongitude();
+            double longitude = addresses.get(0).getLongitude();
 
             coordinates.add(latitude);
             coordinates.add(longitude);
@@ -115,6 +115,8 @@ public class myService extends IntentService {
             editor.putFloat("longitude", (float) longitude);
             editor.apply();
         }
+        else
+            return getPreviousCoordinates();
 
         return coordinates;
     }

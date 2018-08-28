@@ -2,16 +2,17 @@ package com.example.meet13;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+
 
 public class SettingsActivity extends AppCompatActivity {
 
-    public static final String CHANGED = "location was changed";
-    private boolean changed = false;
+    public static final String IS_PREFS_CHANGED = "isChanged";
+    private boolean isChanged = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,20 +24,15 @@ public class SettingsActivity extends AppCompatActivity {
                 .commit();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        preferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                changed = true;
-            }
-        });
+        preferences.registerOnSharedPreferenceChangeListener((sharedPreferences, key) -> isChanged = true);
     }
 
     @Override
-    public boolean navigateUpTo(Intent upIntent) {
-        upIntent.putExtra(CHANGED, changed);
+    public void onBackPressed() {
+        Intent upIntent = new Intent(this, MainActivity.class);
+        upIntent.putExtra(IS_PREFS_CHANGED, isChanged);
         setResult(RESULT_OK, upIntent);
         finish();
-        return super.navigateUpTo(upIntent);
     }
 
     public static class SettingsFragment extends PreferenceFragment {

@@ -130,17 +130,16 @@ public class MainActivity extends AppCompatActivity implements MainManager.View,
 
     @Override
     public void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
         if(SwipeRefreshLayout.isRefreshing())
             return;
-        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgressBar() {
         if(SwipeRefreshLayout.isRefreshing())
-            return;
+            SwipeRefreshLayout.setRefreshing(false);
         progressBar.setVisibility(View.GONE);
-        SwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -151,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements MainManager.View,
     @Override
     public void onItemClick(DailyForecast dailyForecast) {
         Intent info = new Intent(MainActivity.this, InformationActivity.class);
+        info.putExtra(WEATHER_INFO, dailyForecast);
         startActivity(info);
     }
 
@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements MainManager.View,
     @Override
     public void startService() {
         Intent service = new Intent(MainActivity.this, myService.class);
-        service.putExtra(SettingsActivity.CHANGED, changed);
+        service.putExtra(SettingsActivity.IS_PREFS_CHANGED, changed);
         changed = false;
 
         startService(service);
@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements MainManager.View,
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_FOR_RESULT && resultCode == RESULT_OK) {
-            changed = data.getBooleanExtra(SettingsActivity.CHANGED, false);
+            changed = data.getBooleanExtra(SettingsActivity.IS_PREFS_CHANGED, false);
             if (changed) {
                 updating();
             }

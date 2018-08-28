@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="69dp"
             android:layout_marginStart="69dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="16dp"
             android:text="TextView"
             android:textColor="@color/background"
             app:layout_constraintEnd_toEndOf="parent"
@@ -53,15 +53,17 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/weatherPerHour"
-            android:layout_width="384dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal"
-            app:layoutManager="LinearLayoutManager"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/progressBar"
+            app:layout_constraintTop_toBottomOf="@+id/description"
+            app:layout_constraintVertical_bias="1.0"
             tools:listitem="@layout/hourly_list_item" />
 
         <android.support.constraint.Guideline
@@ -69,12 +71,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="245dp" />
+            app:layout_constraintGuide_begin="229dp" />
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/constraintLayout"
-            android:layout_width="380dp"
-            android:layout_height="262dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -83,10 +85,9 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/weatherPerDay"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="1dp"
+                android:layout_height="0dp"
                 android:orientation="vertical"
-                app:layoutManager="LinearLayoutManager"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -95,6 +96,7 @@
 
             </android.support.v7.widget.RecyclerView>
         </android.support.constraint.ConstraintLayout>
+
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v4.widget.SwipeRefreshLayout>

@@ -26,7 +26,7 @@ public class InformationActivity extends AppCompatActivity {
         dateText = (TextView) findViewById(R.id.dateText);
         dayTemp = (TextView) findViewById(R.id.dayTemp);
         nigthTemp = (TextView) findViewById(R.id.nightTemp);
-        description = (TextView) findViewById(R.id.description);
+        description = (TextView) findViewById(R.id.descriptionText);
 
         sunrise = (TextView) findViewById(R.id.sunriseText);
         sunset = (TextView) findViewById(R.id.sunsetText);

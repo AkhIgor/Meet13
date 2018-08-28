@@ -28,7 +28,7 @@ public class DailyForecastAdapter extends RecyclerView.Adapter<DailyForecastAdap
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(Context).inflate(R.layout.daily_list_item, parent);
+        View view = LayoutInflater.from(Context).inflate(R.layout.daily_list_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -42,12 +42,7 @@ public class DailyForecastAdapter extends RecyclerView.Adapter<DailyForecastAdap
         holder.Date.setText(Formats.dateFormat(forecast.getTime()));
         holder.Description.setText(forecast.getSummary());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myCalBack.onItemClick(forecast);
-            }
-        });
+        holder.itemView.setOnClickListener(v -> myCalBack.onItemClick(forecast));
     }
 
     public void addDailyData(List<DailyForecast> data){
